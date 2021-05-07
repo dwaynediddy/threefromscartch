@@ -12,5 +12,6 @@ console.log(scene)
 console.log(camera)
 console.log(render)
 
+render.setSize(innerWidth, innerHeight)
 document.body.appendChild(render.domElement)
 
