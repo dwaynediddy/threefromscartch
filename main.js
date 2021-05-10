@@ -2,9 +2,11 @@
 
 import * as THREE from 
 'https://cdn.skypack.dev/pin/three@v0.128.0-4xvsPydvGvI2Nx1Gbe39/mode=imports/optimized/three.js';
-
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 import * as dat from 'dat.gui'
-console.log(dat)
+
+console.log(OrbitControls)
+
 
 const gui = new dat.GUI()
 const world = {
@@ -66,6 +68,8 @@ document.body.appendChild(render.domElement)
 
 camera.position.z = 5
 
+new OrbitControls(camera, render.domElement)
+
 const planeGeometry = new THREE.PlaneGeometry(10, 10, 10, 10)
 
 const planeMaterial = new THREE.MeshPhongMaterial({ color: 0xff0000,
@@ -77,6 +81,10 @@ scene.add(planeMesh)
 const light = new THREE.DirectionalLight(0xffffff, 1)
 light.position.set(0, 0, 1)
 scene.add(light)
+
+const backLight = new THREE.DirectionalLight(0xffffff, 1)
+light.position.set(0, 0, -1)
+scene.add(backLight)
 
 console.log(planeGeometry)
 console.log(planeMesh.geometry.attributes.position.array)
