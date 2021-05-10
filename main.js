@@ -3,6 +3,48 @@
 import * as THREE from 
 'https://cdn.skypack.dev/pin/three@v0.128.0-4xvsPydvGvI2Nx1Gbe39/mode=imports/optimized/three.js';
 
+import * as dat from 'dat.gui'
+console.log(dat)
+
+const gui = new dat.GUI()
+const world = {
+  plane: {
+    width: 10,
+    height: 10,
+  }
+}
+gui.add(world.plane, 'width', 1, 20).
+onChange(() => {
+  planeMesh.geometry.dispose()
+  planeMesh.geometry = new THREE.PlaneGeometry(world.plane.width, world.plane.height, 10, 10)
+  const { array } = planeMesh.geometry.attributes.position
+for (let i = 0; i < array.length; i += 3) {
+  const x = array[i]
+  const y = array[i + 1]
+  const z = array[i + 2]
+
+  array[i + 2] = z + Math.random()
+
+ console.log(array[i])
+}
+})
+
+gui.add(world.plane, 'height', 1, 20).
+onChange(() => {
+  planeMesh.geometry.dispose()
+  planeMesh.geometry = new THREE.PlaneGeometry(world.plane.width, world.plane.height, 10, 10)
+  const { array } = planeMesh.geometry.attributes.position
+for (let i = 0; i < array.length; i += 3) {
+  const x = array[i]
+  const y = array[i + 1]
+  const z = array[i + 2]
+
+  array[i + 2] = z + Math.random()
+
+ console.log(array[i])
+}
+})
+
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(75, innerWidth / innerHeight, 0.1, 1000)
 
@@ -22,7 +64,7 @@ document.body.appendChild(render.domElement)
 
 camera.position.z = 5
 
-const planeGeometry = new THREE.PlaneGeometry(5, 5, 10, 10)
+const planeGeometry = new THREE.PlaneGeometry(10, 10, 10, 10)
 
 const planeMaterial = new THREE.MeshPhongMaterial({ color: 0xff0000,
 side: THREE.DoubleSide, flatShading: THREE.FlatShading })
