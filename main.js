@@ -61,7 +61,7 @@ planeMesh.geometry.attributes.position.originalPosition = planeMesh.geometry.att
 
   const colors = []
   for(let i = 0; i < planeMesh.geometry.attributes.position.count; i++) {
-    colors.push(1, 0.00, 0.0)
+    colors.push(1, 0, 0)
 }
 
 planeMesh.geometry.setAttribute('color', 
