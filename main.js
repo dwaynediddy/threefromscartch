@@ -43,7 +43,7 @@ for (let i = 0; i < array.length; i += 3) {
 
   array[i + 2] = z + Math.random()
 
- console.log(array[i])
+//  console.log(array[i])
   }
 }
 const raycaster = new THREE.Raycaster()
@@ -70,8 +70,12 @@ new OrbitControls(camera, render.domElement)
 
 const planeGeometry = new THREE.PlaneGeometry(10, 10, 10, 10)
 
-const planeMaterial = new THREE.MeshPhongMaterial({ color: 0xff0000,
-side: THREE.DoubleSide, flatShading: THREE.FlatShading })
+const planeMaterial = new THREE.MeshPhongMaterial({ 
+  side: THREE.DoubleSide, 
+  flatShading: THREE.FlatShading,
+  vertexColors: true
+
+})
 
 const planeMesh = new THREE.Mesh(planeGeometry, planeMaterial)
 scene.add(planeMesh)
@@ -90,6 +94,18 @@ for (let i = 0; i < array.length; i += 3) {
   
   //  console.log(array[i])
 }
+
+const colors = []
+for(let i = 0; i < planeMesh.geometry.attributes.position.count; i++) {
+  colors.push(1, 0, 0)
+}
+
+planeMesh.geometry.setAttribute('color', 
+new THREE.BufferAttribute(
+  new Float32Array(colors), 3)
+  )
+
+  console.log(planeMesh.geometry.attributes)
 
 const light = new THREE.DirectionalLight(0xffffff, 1)
 light.position.set(0, 0, 1)
@@ -113,8 +129,28 @@ function animate() {
 
   raycaster.setFromCamera(mouse, camera)
   const intersects = raycaster.intersectObject(planeMesh)
+  if(intersects.length > 0) {
+    // console.log(intersects[0].face)
+    // console.log()
 
-  console.log(intersects)
+    const { color } = intersects[0].object.geometry.attributes
+    // vertice 1
+    color.setX(intersects[0].face.a, 0)
+    color.setY(intersects[0].face.a, 0)
+    color.setZ(intersects[0].face.a, 1)
+    
+    // vertice 2
+    color.setX(intersects[0].face.b, 0)
+    color.setY(intersects[0].face.b, 0)
+    color.setZ(intersects[0].face.a, 1)
+    
+    // vertice 3
+    color.setX(intersects[0].face.c, 0)
+    color.setY(intersects[0].face.c, 0)
+    color.setZ(intersects[0].face.a, 1)
+
+    intersects[0].object.geometry.attributes.color.needsUpdate = true
+  }
 }
 
 animate()
