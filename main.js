@@ -61,7 +61,7 @@ planeMesh.geometry.attributes.position.originalPosition = planeMesh.geometry.att
 
   const colors = []
   for(let i = 0; i < planeMesh.geometry.attributes.position.count; i++) {
-    colors.push(0, 0.19, 0.4)
+    colors.push(1, 0.00, 0.0)
 }
 
 planeMesh.geometry.setAttribute('color', 
@@ -165,7 +165,7 @@ function animate() {
 
     const initialColor = {
       r: 0,
-      g: 0.19,
+      g: 0,
       b: 0.4
     }
     const hoverColor = {
