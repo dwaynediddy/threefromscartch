@@ -5,14 +5,31 @@
     <link rel="icon" type="image/svg+xml" href="favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Vite App</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Prompt:wght@100&display=swap" rel="stylesheet">
+    <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
     <style>
       body {
         margin: 0;
       }
+      .font {
+        font-family: 'Prompt', sans-serif;
+      }
     </style>
   </head>
   <body>
-    <div id="app"></div>
+    <div id="app">
+      <div class="absolute text-white text-center"
+      style="top: 50%; 
+      transform: translate(-50%); left: 50%;"
+      >
+        <h1 class="font tracking-wide">Dwaynes Three.js</h1>
+          <p  class="font text-2xl">COOL ANIMATIONS.
+            WITH MUCH MORE TO COME.
+          </p>
+        <button>view more</button>
+      </div>
+    </div>
     <script type="module" src="/main.js"></script>
   </body>
 </html>
