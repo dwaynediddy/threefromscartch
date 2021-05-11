@@ -4,9 +4,7 @@ import * as THREE from
 'https://cdn.skypack.dev/pin/three@v0.128.0-4xvsPydvGvI2Nx1Gbe39/mode=imports/optimized/three.js';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 import * as dat from 'dat.gui'
-
-console.log(OrbitControls)
-
+import { Ray } from 'three/src/Three'
 
 const gui = new dat.GUI()
 const world = {
@@ -48,7 +46,7 @@ for (let i = 0; i < array.length; i += 3) {
  console.log(array[i])
   }
 }
-
+const raycaster = new THREE.Raycaster()
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(75, innerWidth / innerHeight, 0.1, 1000)
 
@@ -78,28 +76,33 @@ side: THREE.DoubleSide, flatShading: THREE.FlatShading })
 const planeMesh = new THREE.Mesh(planeGeometry, planeMaterial)
 scene.add(planeMesh)
 
-const light = new THREE.DirectionalLight(0xffffff, 1)
-light.position.set(0, 0, 1)
-scene.add(light)
 
-const backLight = new THREE.DirectionalLight(0xffffff, 1)
-light.position.set(0, 0, -1)
-scene.add(backLight)
-
-console.log(planeGeometry)
-console.log(planeMesh.geometry.attributes.position.array)
+// console.log(planeGeometry)
+// console.log(planeMesh.geometry.attributes.position.array)
 
 const { array } = planeMesh.geometry.attributes.position
 for (let i = 0; i < array.length; i += 3) {
   const x = array[i]
   const y = array[i + 1]
   const z = array[i + 2]
-
+  
   array[i + 2] = z + Math.random()
-
- console.log(array[i])
+  
+  //  console.log(array[i])
 }
 
+const light = new THREE.DirectionalLight(0xffffff, 1)
+light.position.set(0, 0, 1)
+scene.add(light)
+
+const backLight = new THREE.DirectionalLight(0xffffff, 1)
+backLight.position.set(0, 0, -1)
+scene.add(backLight)
+
+const mouse = {
+  x: undefined,
+  y: undefined
+}
 
 function animate() {
   requestAnimationFrame(animate)
@@ -107,6 +110,20 @@ function animate() {
   // mesh.rotation.x += 0.01
   // mesh.rotation.y += 0.01
   // planeMesh.rotation.x += 0.01
+
+  raycaster.setFromCamera(mouse, camera)
+  const intersects = raycaster.intersectObject(planeMesh)
+
+  console.log(intersects)
 }
 
 animate()
+
+
+addEventListener('mousemove', (event) => {
+  mouse.x = (event.clientX / innerWidth)
+  * 2 - 1
+  mouse.y = -(event.clientY /innerHeight)
+  * 2 + 1
+  // console.log(mouse)
+})
